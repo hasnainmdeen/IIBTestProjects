@@ -1,0 +1,28 @@
+<project name="jenkins-build" default="build">
+	<description>IIB Continuous Integration Demo (main script)</description>
+	<property file="build.properties" />
+    <property name="datadir" value="../../" />
+	
+	<target name="build">
+		<echo message="Building bar..." />
+		<exec executable="${iib.toolkit}/mqsicreatebar">
+			<arg value="-data" />
+			<arg value="${datadir}" />
+			<arg value="-b" />
+			<arg value="${bar.name}" />
+			<arg value="-a" />
+			<arg value="${appname}" />
+			<arg value="-deployAsSource" />
+		</exec>
+		<echo message="Bar build successful" />
+		
+		<echo message="Deploying Bar" />
+		<exec executable="deploycmd.bat">
+			<arg value="${iib.broker}" />
+			<arg value="${iib.server}" />
+			<arg value="${bar.name}" />
+		</exec>
+		<echo message="Bar deployed" />
+		
+	</target>
+</project>
